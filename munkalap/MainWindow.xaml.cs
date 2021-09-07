@@ -29,8 +29,7 @@ namespace munkalap
 
         private void miEmployees_Click(object sender, RoutedEventArgs e)
         {
-            var employeeWindow = new EmployeeWindow();
-            employeeWindow.ShowDialog();
+            new EmployeeWindow().ShowDialog();
         }
     }
 }

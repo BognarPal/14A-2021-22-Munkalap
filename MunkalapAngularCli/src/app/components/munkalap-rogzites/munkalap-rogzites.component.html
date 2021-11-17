@@ -1,0 +1,33 @@
+<h2 class="text-center mb-5">Új hiba bejelentése</h2>
+<div class="failure">
+    <form>
+        <div class="mb-3">
+          <label for="issuerName" class="form-label" [ngClass]="isEmpty.issuer ? 'text-danger' : ''" >
+            Bejelentő neve
+          </label>
+          <input type="text" class="form-control" id="issuerName" name="issuerName" [(ngModel)]="failure.issuer" required>
+        </div>
+        <div class="mb-3">
+          <label for="room" class="form-label" [ngClass]="isEmpty.room ? 'text-danger' : ''">
+            Helyiség
+          </label>
+          <input type="text" class="form-control" id="room" name="room" [(ngModel)]="failure.room" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label" [ngClass]="isEmpty.description ? 'text-danger' : ''">
+              Hiba rövid leírása
+            </label>
+            <textarea class="form-control" id="description" name="description" [(ngModel)]="failure.description" required>              
+            </textarea>            
+        </div>
+        <div *ngIf="errorMessage" class="text-center text-danger">
+          {{errorMessage}}
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" (click)="sendFailure()" [disabled]="isLoading" >
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+              Elküldés
+            </button>
+        </div>
+    </form>
+</div>

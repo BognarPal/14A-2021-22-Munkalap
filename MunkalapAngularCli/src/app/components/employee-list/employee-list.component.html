@@ -1,0 +1,86 @@
+<h2>Dolgozó adatok</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Név</th>
+            <th>
+                <span class="btn btn-sm btn-success" [ngClass]="status.underModify ? 'disabled' : ''" (click)="new()">
+                    Új dolgozó
+                </span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="status.isNew">
+            <td>
+                <input type="text" class="form-control" name="" id="" [value]="status.newName"
+                (change)="newNameChanged($event)"> 
+                <label *ngIf="status.errorMessage" class="text-danger" >{{status.errorMessage}}</label>
+            </td>
+            <td>
+                <span class="btn btn-sm btn-success me-2" (click)="saveNew()">Mentés</span>
+                <span class="btn btn-sm btn-danger" (click)="status.isNew = false">Mégsem</span>
+            </td>
+        </tr>
+        <tr *ngFor="let employee of employees">
+            <!-- <td [ngStyle]="{'color': employee.isDeleted ? 'red' : 'black'}"> -->
+            <td *ngIf='status.underModify != employee.id' 
+                [ngClass]="employee.isDeleted ? 'deleted' : '' ">
+                {{employee.name}}
+            </td>
+            <td *ngIf='status.underModify != employee.id'>
+                <span *ngIf="!employee.isDeleted" class="btn btn-sm btn-info me-2" 
+                      [ngClass]="status.isNew || status.underModify ? 'disabled' : ''" (click)="modify(employee)">
+                    Módosítás
+                </span>
+                <span *ngIf="!employee.isDeleted" class="btn btn-sm btn-danger" 
+                      [ngClass]="status.isNew || status.underModify ? 'disabled' : ''" (click)="delete(employee)">
+                    Törlés
+                </span>
+            </td>
+            <td *ngIf='status.underModify == employee.id'>
+                <input type="text" class="form-control" name="" id="" [value]="employee.name" 
+                       (change)="nameModified($event)" >
+                <label *ngIf="status.errorMessage" class="text-danger" >{{status.errorMessage}}</label>
+            </td>
+            <td *ngIf='status.underModify == employee.id'>
+                <span class="btn btn-sm btn-success me-2" (click)="saveUpdate(employee)">Mentés</span>
+                <span class="btn btn-sm btn-danger" (click)="status.underModify = null">Mégsem</span>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="" id="chbDeletedVisible" (click)="reload($event)">
+                    <label for="chbDeletedVisible" class="form-check-label">Törölt rekordok látszanak</label>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+ 
+  <!-- Modal -->
+  <div class="modal fade show" id="confirmDeleteModal" tabindex="10" 
+       [ngStyle]="{'display': underDeleteEmployee ? 'block' : 'none'}">
+    <div class="modal-dialog modal-dialog-center">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Megerősítés</h5>
+          <button type="button" class="btn-close" (click)="underDeleteEmployee = null"></button>
+        </div>
+        <div class="modal-body">
+            Biztosan törölni szeretné a dolgozót?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="underDeleteEmployee = null">Nem</button>
+          <button type="button" class="btn btn-danger" (click)="deleteConfirmed()">Igen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

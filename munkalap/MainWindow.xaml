@@ -15,6 +15,7 @@
             <MenuItem Header="Törzsadatok">
                 <MenuItem Name="miEmployees" Header="Dolgozók" Click="miEmployees_Click" />
             </MenuItem>
+            <MenuItem Name="miFailures" Header="Munkalapok" Click="miFailures_Click"/>
         </Menu>
     </Grid>
 </Window>

@@ -1,8 +1,7 @@
 ﻿namespace munkalap.data
 {
-    public interface IEmployee
+    public interface IEmployee: IIdentity
     {
-        int Id { get; set; }
         string Name { get; set; }
         bool IsDeleted { get; set; }
     }

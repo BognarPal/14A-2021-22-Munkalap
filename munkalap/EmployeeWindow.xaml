@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:munkalap"
         mc:Ignorable="d"
-        Title="Dolgozók" Height="450" Width="800" FontSize="16">
+        Title="Dolgozók" Height="450" Width="800" FontSize="16" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--https://stackoverflow.com/questions/21130708/wpf-listboxitem-contextmenu-->
+        <ListBox Name="lbEmployee" Grid.RowSpan="2" Margin="10" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}">
+                        <Label.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="miModify" Header="Módosítás" 
+                                          Click="miModify_Click"/>
+                                <MenuItem Name="miDelete" Header="Törlés"
+                                          Click="miDelete_Click"/>
+                            </ContextMenu>
+                        </Label.ContextMenu>
+                    </Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>          
+        </ListBox>
+        <Button Name="btnNew" Content="Új" Grid.Row="2" MaxWidth="120" MinWidth="90"
+                Margin="10" Click="btnNew_Click" />
+        <GroupBox Name="grpDetails" Header="Részletek" Grid.Column="1" Margin="10"
+                  >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Név:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtName" Grid.Column="1" Height="30" 
+                         VerticalContentAlignment="Center" 
+                         Text="{Binding Name, Mode=TwoWay}"/>
+                <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
+                    <Button Name="btnSave" Content="Mentés" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnSave_Click"/>
+                    <Button Name="btnCancel" Content="Mégsem" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnCancel_Click"/>
+                </WrapPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

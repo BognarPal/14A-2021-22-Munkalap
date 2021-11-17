@@ -1,0 +1,12 @@
+button {
+    min-width: 4.5rem;
+}
+
+#divEmployee div.mx-auto {
+    width: 9.5rem;
+}
+
+#assignCommentInfo, #finishCommentInfo {
+    font-size: 0.7rem;
+    text-align: justify;
+}

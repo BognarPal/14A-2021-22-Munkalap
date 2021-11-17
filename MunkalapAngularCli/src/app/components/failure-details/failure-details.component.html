@@ -1,0 +1,91 @@
+<div class="border border-primary accordion-item">
+    <h4 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                [attr.data-bs-target]="'#data_' + failure.id.toString()" >
+            <span class="text-primary me-2 fw-bold">{{failure.id}}/{{failure.issueTimeStamp.getFullYear()}}</span> 
+            <span>{{failure.description}}</span>
+            <br>
+            <span class="fst-italic fs-5 mx-2">{{failure.issuer}}</span>
+            <span class="fst-italic fs-5">({{failure.issueTimeStamp | date: 'yyyy.MM.dd HH:mm'}})</span>
+        </button>
+    </h4>
+
+    <div class="accordion-collapse collapse" [id]="'data_' + failure.id.toString()">
+        <div *ngIf="!assigning && !failure.assignedId" 
+            class="d-flex" id="divEmployeeUpdate">
+            <button class="btn btn-sm btn-primary ms-5" (click)="assignEmployee()" 
+                    [disabled]="!authService.allowedOperations.includes('empl_assign')">
+                Dolgozó kijelölése
+            </button>
+
+            <button class="btn btn-sm btn-danger ms-5" (click)="deleteFailure()" 
+                    [disabled]="!authService.allowedOperations.includes('failure_delete')">
+                Munkalap törlése
+            </button>
+        </div>
+        
+        <div *ngIf="assigning" id="divEmployee">
+            <div class="d-flex">
+                <label for="employee" class="form-control-label" >Felelős:</label>
+                <select class="form-select form-select-sm mx-2 w-25" id="employee" name="employee" 
+                        [(ngModel)]="assign.id">
+                    <option value=""></option>
+                    <option *ngFor="let empl of employees" [value]="empl.id">{{empl.name}}</option>
+                </select>
+                <label for="assignComment" class="form-control-label" >Megjegyzés:</label>
+                <input type="text" class="form-control form-control-sm ms-2" id="assignComment" name="assignComment"
+                       [(ngModel)]="assign.comment">
+            </div>
+            <div class="d-flex mx-auto mt-2">
+                <button class="btn btn-sm btn-success" (click)="saveAssign()">Ok</button>
+                <button class="btn btn-sm btn-danger ms-2" (click)="assigning = false">
+                    Mégsem
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="failure.assignedId" id="divEmployeeInfo">
+            <div class="f-flex">
+                <label for="employee" class="form-control-label" >Felelős:</label>
+                <b class="mx-2">{{failure.assignedName}}</b> 
+                <span class="fst-italic me-2">({{ failure.workFinished ? 'Befejezve: ' + failure.workFinishedStr : 
+                                                ( failure.workStarted ?  'Elkezdve: '  + failure.workStartedStr : 
+                                                                        'Kiosztva: '  + failure.assignTimeStampStr) }})
+                </span>
+                <button *ngIf="!failure.workStarted && authService.allowedOperations.includes('empl_assign')" 
+                        class="btn btn-sm btn-primary me-2" (click)="modifyAssign()">
+                    Módosítás
+                </button>
+                <button *ngIf="!failure.workStarted && authService.allowedOperations.includes('work_start')" 
+                        class="btn btn-sm btn-primary" (click)="workStarted()">
+                    Munka elkezdése
+                </button>
+                <button *ngIf="failure.workStarted && !failure.workFinished && 
+                            !finishing && authService.allowedOperations.includes('work_finish')" 
+                        class="btn btn-sm btn-primary" (click)="finishing=true">
+                    Munka befejezése
+                </button>
+            </div>
+            <div id="assignCommentInfo">
+                <b>Megjegyzés a munka elvégzéséhez</b>: {{failure.assignComment}}
+            </div>
+            <div *ngIf="finishing" class="d-flex">
+                <label for="finishComment" class="form-control-label" >Megjegyzés:</label>
+                <input type="text" class="form-control form-control-sm mx-2" id="finishComment" name="finishComment"
+                       [(ngModel)]="finishComment">
+                <button class="btn btn-sm btn-success" (click)="workFinished()">Ok</button>
+                <button class="btn btn-sm btn-danger ms-2" (click)="finishing=false">Mégsem</button>
+            </div>
+            <div *ngIf="failure.workFinished" id="finishCommentInfo">
+                <b>Megjegyzés a dolgozótól</b>: {{failure.finishComment}}
+            </div>
+            <div *ngIf="failure.workFinished && !failure.isChecked" class="text-center">
+                <button *ngIf="authService.allowedOperations.includes('work_check')" 
+                        class="btn btn-sm btn-success" (click)="workCheck()">
+                    Ellenőrizve
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

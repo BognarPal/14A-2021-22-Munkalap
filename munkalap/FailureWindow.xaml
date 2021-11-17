@@ -1,0 +1,68 @@
+﻿<Window x:Class="munkalap.FailureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:munkalap"
+        mc:Ignorable="d"
+        Title="Hibák kezelése" Height="450" Width="800" FontSize="16" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Keresés" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Leírás:" VerticalContentAlignment="Center"/>
+                <Label Content="Dolgozó:" Grid.Row="1" VerticalContentAlignment="Center"/>
+                <TextBox Name="txtDescription" Grid.Column="1" Height="24" />
+                <ComboBox Name="cboEmployee" Grid.Column="1" Grid.Row="1" Height="24"/>
+                <WrapPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Name="btnSearch" Content="Keresés" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnSearch_Click"/>
+                    <Button Name="btnClearFilter" Content="Felt. törlése" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnClearFilter_Click"/>
+                </WrapPanel>
+            </Grid>
+        </GroupBox>
+
+        <DataGrid Name="dgFailures" Grid.Row="1" Margin="5" IsReadOnly="True" AutoGenerateColumns="False"
+                  SelectionChanged="dgFailures_SelectionChanged" >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ImageStatus}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Bejelentő" Binding="{Binding Issuer}" Width="160" />
+                <DataGridTextColumn Header="Dátum" Binding="{Binding IssueTimeStamp, StringFormat=yyyy.MM.dd}" Width="160" />
+                <DataGridTextColumn Header="Helyiség" Binding="{Binding Room}" Width="120" />
+                <DataGridTextColumn Header="Leírás" Binding="{Binding Description}" Width="200" />
+                <DataGridTextColumn Header="Dolgozó neve" Binding="{Binding Assigned.Name}" Width="120" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <WrapPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Name="btnNew" Content="Új" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnNew_Click"/>
+            <Button Name="btnAssign" Content="Feladat kiosztása" Width="130" Height="30"
+                            Margin="10 0 10 0" Click="btnAssign_Click" IsEnabled="False"/>
+            <Button Name="btnFinished" Content="Feladat elvégezve" Width="130" Height="30"
+                            Margin="10 0 10 0" Click="btnFinished_Click" IsEnabled="False"/>
+            <Button Name="btnDelete" Content="Törlés" Width="120" Height="30"
+                            Margin="10 0 10 0" Click="btnDelete_Click" IsEnabled="False"/>
+        </WrapPanel>
+
+    </Grid>
+</Window>

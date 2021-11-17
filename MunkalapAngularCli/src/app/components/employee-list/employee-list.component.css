@@ -1,0 +1,24 @@
+table {
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+table th:nth-child(1) {
+    min-width: 200px;
+}
+
+.deleted {
+    color: red;
+}
+
+th {
+    text-align: center;
+}
+
+table td:nth-child(2) {
+    text-align: center;
+}
+
+input[type="text"] {
+    max-width: 180px;
+}

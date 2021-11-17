@@ -1,0 +1,5 @@
+<div *ngFor="let f of failures" class="accordion">
+    <app-failure-details [failure]="f" [employees]="employees" 
+                         (deletedFailure)="deletedFailure($event)">
+    </app-failure-details>
+</div>

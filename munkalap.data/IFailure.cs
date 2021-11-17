@@ -4,9 +4,8 @@ using System.Text;
 
 namespace munkalap.data
 {
-    public interface IFailure
+    public interface IFailure: IIdentity
     {
-        int Id { get; set; }
         string Issuer { get; set; }
         DateTime IssueTimeStamp { get; set; }
         string Room { get; set; }
@@ -17,6 +16,6 @@ namespace munkalap.data
         DateTime? WorkStarted { get; set; }
         DateTime? WorkFinished { get; set; }
         string FinishComment { get; set; }
-        bool? IdChecked { get; set; }
+        bool? IsChecked { get; set; }
     }
 }

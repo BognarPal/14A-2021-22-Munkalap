@@ -1,0 +1,17 @@
+<div class="modal fade show" id="confirmDeleteModal" tabindex="10" style="display: block;">
+    <div class="modal-dialog modal-dialog-center">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Megerősítés</h5>
+                <button type="button" class="btn-close" (click)="cancelClick()"></button>
+            </div>
+            <div class="modal-body">
+                <span [outerHTML]="confirmHTML"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="cancelClick()">Nem</button>
+                <button type="button" class="btn btn-danger" (click)="okClick()">Igen</button>
+            </div>
+        </div>
+    </div>
+</div>

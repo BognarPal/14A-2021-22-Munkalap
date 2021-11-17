@@ -10,9 +10,27 @@
     <Compile Update="EmployeeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="FailureAssignWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FailureDataWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FailureWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="EmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FailureAssignWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FailureDataWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FailureWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
